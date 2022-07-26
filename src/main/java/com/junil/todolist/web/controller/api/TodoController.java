@@ -1,5 +1,7 @@
 package com.junil.todolist.web.controller.api;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.junil.todolist.service.todo.TodoService;
 import com.junil.todolist.web.dto.CMRespDto;
 import com.junil.todolist.web.dto.todo.CreateTodoReqDto;
+import com.junil.todolist.web.dto.todo.TodoListRespDto;
 
 import lombok.RequiredArgsConstructor;
 
@@ -23,9 +26,15 @@ public class TodoController {
 	private final TodoService todoService;
 	
 	@GetMapping("/list")
-	public ResponseEntity<?> getTodoList(@RequestParam int page) {
-		
-		return ResponseEntity.ok().body(new CMRespDto<>(1, page + "page list success to load", null));
+	public ResponseEntity<?> getTodoList(@RequestParam int page, @RequestParam int contentCount) {
+		List<TodoListRespDto> list = null;
+		try {
+			list = todoService.getTodoList(page, contentCount);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.internalServerError().body(new CMRespDto<>(-1, page + "page list on load failed", list));
+		}
+		return ResponseEntity.ok().body(new CMRespDto<>(1, page + "page list success to load", list));
 	}
 	
 	@PostMapping("/todo")

@@ -3,6 +3,7 @@ package com.junil.todolist.service.todo;
 import java.util.List;
 
 import com.junil.todolist.web.dto.todo.CreateTodoReqDto;
+import com.junil.todolist.web.dto.todo.TodoListRespDto;
 
 public interface TodoService {
 	//추가
@@ -10,5 +11,5 @@ public interface TodoService {
 	//수정
 	//삭제
 	//조회
-	public List<?> getTodoList(int page) throws Exception;
+	public List<TodoListRespDto> getTodoList(int page, int contentCount) throws Exception;
 }
