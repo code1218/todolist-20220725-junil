@@ -1,9 +1,12 @@
 package com.junil.todolist.web.controller.api;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.junil.todolist.service.todo.TodoService;
@@ -19,10 +22,18 @@ public class TodoController {
 	
 	private final TodoService todoService;
 	
+	@GetMapping("/list")
+	public ResponseEntity<?> getTodoList(@RequestParam int page) {
+		
+		return ResponseEntity.ok().body(new CMRespDto<>(1, page + "page list success to load", null));
+	}
+	
 	@PostMapping("/todo")
-	public ResponseEntity<?> addContent(@RequestBody CreateTodoReqDto createTodoReqDto) {
+	public ResponseEntity<?> addTodo(@RequestBody CreateTodoReqDto createTodoReqDto) {
 		try {
-			todoService.createTodo(createTodoReqDto);
+			if(!todoService.createTodo(createTodoReqDto)) {
+				throw new RuntimeException("DataBase Error");
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			return ResponseEntity.internalServerError().body(new CMRespDto<>(-1, "Adding todo failed", createTodoReqDto));
