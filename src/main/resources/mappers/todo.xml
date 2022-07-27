@@ -88,6 +88,25 @@
 			todo_code = #{todo_code}
 		
 	</update>
+	
+	<update id="updateTodoByTodoCode" parameterType="com.junil.todolist.domain.todo.Todo">
+		update
+			todo_mst
+		set
+			todo_content = #{todo_content},
+			
+			update_date = now()
+		where
+			todo_code = #{todo_code}	
+	</update>
+	
+	<delete id="remove" parameterType="Integer">
+		delete
+		from
+			todo_mst
+		where
+			todo_code = #{todo_code}
+	</delete>
 </mapper>
   
   

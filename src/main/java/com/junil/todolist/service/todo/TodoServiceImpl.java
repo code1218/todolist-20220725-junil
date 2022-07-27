@@ -11,6 +11,7 @@ import com.junil.todolist.domain.todo.Todo;
 import com.junil.todolist.domain.todo.TodoRepository;
 import com.junil.todolist.web.dto.todo.CreateTodoReqDto;
 import com.junil.todolist.web.dto.todo.TodoListRespDto;
+import com.junil.todolist.web.dto.todo.UpdateTodoReqDto;
 
 import lombok.RequiredArgsConstructor;
 
@@ -23,6 +24,8 @@ public class TodoServiceImpl implements TodoService {
 	@Override
 	public boolean createTodo(CreateTodoReqDto createTodoReqDto) throws Exception {
 		Todo todoEntity = createTodoReqDto.toEntity();
+		return todoRepository.save(todoEntity) > 0;
+		/*
 		String content = todoEntity.getTodo_content();
 		for(int i = 200; i < 1000; i++) {
 			todoEntity.setTodo_content(content + "_" + (i + 1));
@@ -34,8 +37,8 @@ public class TodoServiceImpl implements TodoService {
 			todoRepository.save(todoEntity);
 		}
 		return true;
+		*/
 		
-//		return todoRepository.save(todoEntity) > 0;
 	}
 
 	@Override
@@ -79,6 +82,16 @@ public class TodoServiceImpl implements TodoService {
 	@Override
 	public boolean updateTodoImportance(int todoCode) throws Exception {
 		return todoRepository.updateTodoImportance(todoCode) > 0;
+	}
+	
+	@Override
+	public boolean updateTodo(UpdateTodoReqDto updateTodoReqDto) throws Exception {
+		return todoRepository.updateTodoByTodoCode(updateTodoReqDto.toEntity()) > 0;
+	}
+	
+	@Override
+	public boolean removeTodo(int todoCode) throws Exception {
+		return todoRepository.remove(todoCode) > 0;
 	}
 
 }
