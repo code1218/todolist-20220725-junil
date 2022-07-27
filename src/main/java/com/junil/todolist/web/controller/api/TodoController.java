@@ -5,7 +5,9 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -37,6 +39,19 @@ public class TodoController {
 		return ResponseEntity.ok().body(new CMRespDto<>(1, page + "page list success to load", list));
 	}
 	
+	@GetMapping("/list/importance")
+	public ResponseEntity<?> getImportanceTodoList(@RequestParam int page, @RequestParam int contentCount) {
+		List<TodoListRespDto> list = null;
+		try {
+			list = todoService.getImportanceTodoList(page, contentCount);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.internalServerError().body(new CMRespDto<>(-1, page + "page importance list on load failed", list));
+		}
+		return ResponseEntity.ok().body(new CMRespDto<>(1, page + "page importance list success to load", list));
+	}
+	
+	
 	@PostMapping("/todo")
 	public ResponseEntity<?> addTodo(@RequestBody CreateTodoReqDto createTodoReqDto) {
 		try {
@@ -49,4 +64,42 @@ public class TodoController {
 		}
 		return ResponseEntity.ok().body(new CMRespDto<>(1, "success", createTodoReqDto));
 	}
+	
+	@PutMapping("/complete/todo/{todo_code}")
+	public ResponseEntity<?> setCompleteTodo(@PathVariable int todo_code) {
+		boolean status = false;
+		try {
+			status = todoService.updateTodoComplete(todo_code);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.internalServerError().body(new CMRespDto<>(-1, "failed", status));
+		}
+		return ResponseEntity.ok().body(new CMRespDto<>(1, "success", status));
+	}
+	
+	@PutMapping("/importance/todo/{todo_code}")
+	public ResponseEntity<?> setImportanceTodo(@PathVariable int todo_code) {
+		boolean status = false;
+		try {
+			status = todoService.updateTodoImportance(todo_code);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.internalServerError().body(new CMRespDto<>(-1, "failed", status));
+		}
+		return ResponseEntity.ok().body(new CMRespDto<>(1, "success", status));
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+

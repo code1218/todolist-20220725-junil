@@ -12,4 +12,8 @@ public interface TodoService {
 	//삭제
 	//조회
 	public List<TodoListRespDto> getTodoList(int page, int contentCount) throws Exception;
+	public List<TodoListRespDto> getImportanceTodoList(int page, int contentCount) throws Exception;
+	public boolean updateTodoComplete(int todoCode) throws Exception;
+	public boolean updateTodoImportance(int todoCode) throws Exception;
+	
 }
