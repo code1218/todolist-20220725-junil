@@ -61,6 +61,7 @@ public class TodoServiceImpl implements TodoService {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("index", (page - 1) * contentCount);
 		map.put("count", contentCount);
+		map.put("count2", page * contentCount);
 		return map;
 	}
 	

@@ -26,6 +26,7 @@
 			tm.importance_flag,
 			
 			tt.total_count,
+			tc.incomplete_count,
 			
 			tm.create_date,
 			tm.update_date
@@ -36,6 +37,18 @@
 											COUNT(*) AS total_count
 										FROM
 											todo_mst) tt ON (1 = 1)
+			left outer join (select
+										count(tm2.todo_complete) as incomplete_count
+									from
+										(select
+											todo_complete
+										from
+											todo_mst
+										order by
+											todo_code desc
+										limit 0, #{count2}) tm2
+									where
+										todo_complete = 0) tc on (1 = 1)
 		order by
 			todo_code desc
 		limit #{index}, #{count}
@@ -50,6 +63,7 @@
 			tm.importance_flag,
 			
 			tt.total_count,
+			tc.incomplete_count,
 			
 			tm.create_date,
 			tm.update_date
@@ -62,6 +76,20 @@
 											todo_mst
 										where
 											importance_flag = 1) tt ON (1 = 1)
+			left outer join (select
+										count(tm2.todo_complete) as incomplete_count
+									from
+										(select
+											todo_complete
+										from
+											todo_mst
+										where
+											importance_flag = 1
+										order by
+											todo_code desc
+										limit 0, #{count2}) tm2
+									where
+										todo_complete = 0) tc on (1 = 1)
 		where
 			importance_flag = 1
 		order by
