@@ -9,6 +9,7 @@
 
     <link rel="stylesheet" href="/static/css/style.css">
     <link rel="stylesheet" href="/static/css/index.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
 
     <title>TodoList</title>
 
@@ -19,32 +20,34 @@
 
         </header>
         <main>
-            <article>
-                <section>
-                    <div class="type-select-box">
-                        <div class="selected-type">All</div>
-                        <ul style="display: none">
-                            <li>Importance</li>
-                            <li>Complete</li>
-                            <li>Incomplete</li>
-                        </ul>
+            <section class="section-header">
+                <div class="type-select-box">
+                    <div class="selected-type">ALL</div>
+                    <div class="selected-type-button">
+                        <i class="fa-solid fa-caret-down"></i>
                     </div>
-                    <div>
-                        남은 할일 카운트
-                    </div>
-                </section>
-                <section>
-                    <ul>
-                        <li>
-                            <input type="checkbox" name="" id="">
-                            <div></div>
-                            <input type="text" style="display: none;">
-                            <div>삭제</div>
-                        </li>
-                    </ul>
-                    <div>추가버튼</div>
-                </section>
-            </article>
+                </div>
+                <ul class="type-select-box-list">
+                    <li>Importance</li>
+                    <li>Complete</li>
+                    <li>Incomplete</li>
+                </ul>
+                
+                <div>
+                    남은 할일 카운트
+                </div>
+            </section>
+            <section>
+                <ul>
+                    <li>
+                        <input type="checkbox" name="" id="">
+                        <div></div>
+                        <input type="text" style="display: none;">
+                        <div>삭제</div>
+                    </li>
+                </ul>
+                <div>추가버튼</div>
+            </section>
         </main>
     </div>
 </body>
