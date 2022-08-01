@@ -91,7 +91,6 @@ main {
 }
 
 .type-select-box-list {
-    display: none;
     position: absolute;
     top: 30px;
 
@@ -182,6 +181,26 @@ main {
     position: relative;
 }
 
+.todo-content-text {
+    width: 280px;
+    height: 20px;
+    overflow: auto;
+    white-space: pre;
+}
+
+.todo-content-text::-webkit-scrollbar {
+    height: 0px;
+    width: 0px;
+}
+
+.todo-content-input {
+    width: 280px;
+    height: 20px;
+    border: 0px;
+    outline: 0px;
+    background-color: #fafafa;
+}
+
 .importance-check {
     display: none;
 }
@@ -192,9 +211,10 @@ main {
     width: 20px;
     height: 20px;
     border-radius: 50%;
-    position: relative;
+    position: absolute;
     background-color: #dbdbdb70;
-    right: -200px;
+    right: 28px;
+    z-index: 1;
     cursor: pointer; 
 }
 
@@ -210,7 +230,7 @@ main {
     height: 18px;
     position: absolute;
     top: 0px;
-    left: 0px;
+    left: 1px;
 }
 
 .importance-check:checked + label {
@@ -228,7 +248,7 @@ main {
     height: 18px;
     position: absolute;
     top: 0px;
-    left: 0px;
+    left: 1px;
 }
 
 
@@ -246,7 +266,7 @@ main {
     background-color:#ff615c;
 
     position: absolute;
-    right: 5px;
+    right: 10px;
 
     cursor: pointer;
 }
@@ -262,6 +282,10 @@ main {
 .section-body {
     height: 480px;
     overflow: auto;
+}
+
+.section-body::-webkit-scrollbar {
+    width:0px;
 }
 
 .todo-add-button {
