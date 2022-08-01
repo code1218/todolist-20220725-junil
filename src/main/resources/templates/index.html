@@ -21,18 +21,20 @@
         </header>
         <main>
             <section class="section-header">
-                <div class="type-select-box">
-                    <div class="selected-type">ALL</div>
-                    <div class="selected-type-button">
-                        <i class="fa-solid fa-caret-down"></i>
+                <div class="type-select">
+                    <div class="type-select-box">
+                        <div class="selected-type">ALL</div>
+                        <div class="selected-type-button">
+                            <i class="fa-solid fa-caret-down"></i>
+                        </div>
                     </div>
+                    <ul class="type-select-box-list">
+                        <li class="type-selected">ALL</li>
+                        <li>Importance</li>
+                        <li>Complete</li>
+                        <li>Incomplete</li>
+                    </ul>
                 </div>
-                <ul class="type-select-box-list">
-                    <li class="type-selected">ALL</li>
-                    <li>Importance</li>
-                    <li>Complete</li>
-                    <li>Incomplete</li>
-                </ul>
                 
                 <div class="incomplete-count-text">
                     완료하지 않은 일: <span class="incomplete-count-number">14</span>
@@ -41,47 +43,142 @@
             <section class="section-body">
                 <ul class="todo-content-list">
                     <li class="todo-content">
-                        <input type="checkbox" id="complete-check">
-                        <label for="complete-check"></label>
+                        <input type="checkbox" id="complete-check" class="complete-check">
+                        <label for="complete-check-index"></label>
                         <div>오늘의 할 일</div>
                         <input type="text" style="display: none;">
+                        <input type="checkbox" id="importance-check" class="importance-check">
+                        <label for="importance-check"></label>
                         <div class="trash-button"><i class="fa-solid fa-trash"></i></div>
                     </li>
                     <li class="todo-content">
-                        <input type="checkbox" id="complete-check">
-                        <label for="complete-check"></label>
+                        <input type="checkbox" id="complete-check" class="complete-check">
+                        <label for="complete-check-index"></label>
                         <div>오늘의 할 일</div>
                         <input type="text" style="display: none;">
+                        <input type="checkbox" id="importance-check" class="importance-check">
+                        <label for="importance-check"></label>
                         <div class="trash-button"><i class="fa-solid fa-trash"></i></div>
                     </li>
                     <li class="todo-content">
-                        <input type="checkbox" id="complete-check">
-                        <label for="complete-check"></label>
+                        <input type="checkbox" id="complete-check" class="complete-check">
+                        <label for="complete-check-index"></label>
                         <div>오늘의 할 일</div>
                         <input type="text" style="display: none;">
+                        <input type="checkbox" id="importance-check" class="importance-check">
+                        <label for="importance-check"></label>
                         <div class="trash-button"><i class="fa-solid fa-trash"></i></div>
                     </li>
                     <li class="todo-content">
-                        <input type="checkbox" id="complete-check">
-                        <label for="complete-check"></label>
+                        <input type="checkbox" id="complete-check" class="complete-check">
+                        <label for="complete-check-index"></label>
                         <div>오늘의 할 일</div>
                         <input type="text" style="display: none;">
+                        <input type="checkbox" id="importance-check" class="importance-check">
+                        <label for="importance-check"></label>
                         <div class="trash-button"><i class="fa-solid fa-trash"></i></div>
                     </li>
                     <li class="todo-content">
-                        <input type="checkbox" id="complete-check">
-                        <label for="complete-check"></label>
+                        <input type="checkbox" id="complete-check" class="complete-check">
+                        <label for="complete-check-index"></label>
                         <div>오늘의 할 일</div>
                         <input type="text" style="display: none;">
+                        <input type="checkbox" id="importance-check" class="importance-check">
+                        <label for="importance-check"></label>
                         <div class="trash-button"><i class="fa-solid fa-trash"></i></div>
                     </li>
                     <li class="todo-content">
-                        <input type="checkbox" id="complete-check">
-                        <label for="complete-check"></label>
+                        <input type="checkbox" id="complete-check" class="complete-check">
+                        <label for="complete-check-index"></label>
                         <div>오늘의 할 일</div>
                         <input type="text" style="display: none;">
+                        <input type="checkbox" id="importance-check" class="importance-check">
+                        <label for="importance-check"></label>
                         <div class="trash-button"><i class="fa-solid fa-trash"></i></div>
                     </li>
+                    <li class="todo-content">
+                        <input type="checkbox" id="complete-check" class="complete-check">
+                        <label for="complete-check-index"></label>
+                        <div>오늘의 할 일</div>
+                        <input type="text" style="display: none;">
+                        <input type="checkbox" id="importance-check" class="importance-check">
+                        <label for="importance-check"></label>
+                        <div class="trash-button"><i class="fa-solid fa-trash"></i></div>
+                    </li>
+                    <li class="todo-content">
+                        <input type="checkbox" id="complete-check" class="complete-check">
+                        <label for="complete-check-index"></label>
+                        <div>오늘의 할 일</div>
+                        <input type="text" style="display: none;">
+                        <input type="checkbox" id="importance-check" class="importance-check">
+                        <label for="importance-check"></label>
+                        <div class="trash-button"><i class="fa-solid fa-trash"></i></div>
+                    </li>
+                    <li class="todo-content">
+                        <input type="checkbox" id="complete-check" class="complete-check">
+                        <label for="complete-check-index"></label>
+                        <div>오늘의 할 일</div>
+                        <input type="text" style="display: none;">
+                        <input type="checkbox" id="importance-check" class="importance-check">
+                        <label for="importance-check"></label>
+                        <div class="trash-button"><i class="fa-solid fa-trash"></i></div>
+                    </li>
+                    <li class="todo-content">
+                        <input type="checkbox" id="complete-check" class="complete-check">
+                        <label for="complete-check-index"></label>
+                        <div>오늘의 할 일</div>
+                        <input type="text" style="display: none;">
+                        <input type="checkbox" id="importance-check" class="importance-check">
+                        <label for="importance-check"></label>
+                        <div class="trash-button"><i class="fa-solid fa-trash"></i></div>
+                    </li>
+                    <li class="todo-content">
+                        <input type="checkbox" id="complete-check" class="complete-check">
+                        <label for="complete-check-index"></label>
+                        <div>오늘의 할 일</div>
+                        <input type="text" style="display: none;">
+                        <input type="checkbox" id="importance-check" class="importance-check">
+                        <label for="importance-check"></label>
+                        <div class="trash-button"><i class="fa-solid fa-trash"></i></div>
+                    </li>
+                    <li class="todo-content">
+                        <input type="checkbox" id="complete-check" class="complete-check">
+                        <label for="complete-check-index"></label>
+                        <div>오늘의 할 일</div>
+                        <input type="text" style="display: none;">
+                        <input type="checkbox" id="importance-check" class="importance-check">
+                        <label for="importance-check"></label>
+                        <div class="trash-button"><i class="fa-solid fa-trash"></i></div>
+                    </li>
+                    <li class="todo-content">
+                        <input type="checkbox" id="complete-check" class="complete-check">
+                        <label for="complete-check-index"></label>
+                        <div>오늘의 할 일</div>
+                        <input type="text" style="display: none;">
+                        <input type="checkbox" id="importance-check" class="importance-check">
+                        <label for="importance-check"></label>
+                        <div class="trash-button"><i class="fa-solid fa-trash"></i></div>
+                    </li>
+                    <li class="todo-content">
+                        <input type="checkbox" id="complete-check" class="complete-check">
+                        <label for="complete-check-index"></label>
+                        <div>오늘의 할 일</div>
+                        <input type="text" style="display: none;">
+                        <input type="checkbox" id="importance-check" class="importance-check">
+                        <label for="importance-check"></label>
+                        <div class="trash-button"><i class="fa-solid fa-trash"></i></div>
+                    </li>
+                    <li class="todo-content">
+                        <input type="checkbox" id="complete-check" class="complete-check">
+                        <label for="complete-check-index"></label>
+                        <div>오늘의 할 일</div>
+                        <input type="text" style="display: none;">
+                        <input type="checkbox" id="importance-check" class="importance-check">
+                        <label for="importance-check"></label>
+                        <div class="trash-button"><i class="fa-solid fa-trash"></i></div>
+                    </li>
+
+                    
                 </ul>
                 <div class="todo-add-button"><i class="fa-solid fa-plus"></i></div>
             </section>
