@@ -2,8 +2,25 @@ const selectedTypeButton = document.querySelector(".selected-type-button");
 const typeSelectBoxList = document.querySelector(".type-select-box-list");
 const typeSelectBoxListLis = typeSelectBoxList.querySelectorAll("li");
 const todoContentList = document.querySelector(".todo-content-list");
+const sectionBoby = document.querySelector(".section-body");
 
-let listType = "incomplete";
+let page = 1;
+let totalPage = 0;
+
+sectionBoby.onscroll = () => {
+	let checkNum = todoContentList.clientHeight - sectionBoby.offsetHeight - sectionBoby.scrollTop;
+	
+	if(checkNum < 1 && checkNum > -1 && page < totalPage){
+		console.log(page);
+		console.log(totalPage);
+		page++;
+		load();
+	}
+	
+	
+}
+
+let listType = "all";
 
 load();
 
@@ -15,6 +32,8 @@ selectedTypeButton.onclick = () => {
 for(let i = 0; i < typeSelectBoxListLis.length; i++){
 	
 	typeSelectBoxListLis[i].onclick = () => {
+		page = 1;
+		
 		for(let i = 0; i < typeSelectBoxListLis.length; i++){
 			typeSelectBoxListLis[i].classList.remove("type-selected");
 		}
@@ -43,12 +62,11 @@ function load() {
 		type: "get",
 		url: `/api/v1/todolist/list/${listType}`,
 		data: {
-			page: 1,
+			page: page,
 			contentCount: 20
 		},
 		dataType: "json",
 		success: (response) => {
-			console.log(JSON.stringify(response));
 			getList(response.data);
 		},
 		error: errorMessage
@@ -56,9 +74,14 @@ function load() {
 	})
 }
 
+function setTotalCount(totalCount){
+	totalPage = totalCount % 20 == 0 ? totalCount / 20 : Math.floor(totalCount / 20) + 1;
+}
+
 function getList(data) {
-	
-	
+	const incompleteCountNumber = document.querySelector(".incomplete-count-number");
+	incompleteCountNumber.textContent = data[0].incompleteCount;
+	setTotalCount(data[0].totalCount);
 	for(let content of data) {
 		const listContent = `
 			<li class="todo-content">
