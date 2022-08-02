@@ -1,5 +1,7 @@
 const selectedTypeButton = document.querySelector(".selected-type-button");
 const typeSelectBoxList = document.querySelector(".type-select-box-list");
+const typeSelectBoxListLis = typeSelectBoxList.querySelectorAll("li");
+const todoContentList = document.querySelector(".todo-content-list");
 
 let listType = "incomplete";
 
@@ -9,8 +11,30 @@ selectedTypeButton.onclick = () => {
     typeSelectBoxList.classList.toggle("visible");
 }
 
-selectedTypeButton.onblur = () => {
-    typeSelectBoxList.classList.toggle("visible");
+
+for(let i = 0; i < typeSelectBoxListLis.length; i++){
+	
+	typeSelectBoxListLis[i].onclick = () => {
+		for(let i = 0; i < typeSelectBoxListLis.length; i++){
+			typeSelectBoxListLis[i].classList.remove("type-selected");
+		}
+		
+		const selectedType = document.querySelector(".selected-type");
+		
+		typeSelectBoxListLis[i].classList.add("type-selected");
+		
+		listType = typeSelectBoxListLis[i].textContent.toLowerCase();
+		
+		selectedType.textContent = typeSelectBoxListLis[i].textContent;
+		
+		todoContentList.innerHTML = "";
+		
+		load();
+		
+		typeSelectBoxList.classList.toggle("visible");
+		
+	}
+	
 }
 
 
@@ -33,7 +57,7 @@ function load() {
 }
 
 function getList(data) {
-	const todoContentList = document.querySelector(".todo-content-list");
+	
 	
 	for(let content of data) {
 		const listContent = `

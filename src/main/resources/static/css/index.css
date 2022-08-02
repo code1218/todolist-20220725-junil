@@ -214,7 +214,6 @@ main {
     position: absolute;
     background-color: #dbdbdb70;
     right: 28px;
-    z-index: 1;
     cursor: pointer; 
 }
 
