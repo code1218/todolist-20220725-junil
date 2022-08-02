@@ -8,6 +8,7 @@ let page = 1;
 let totalPage = 0;
 
 sectionBoby.onscroll = () => {
+	console.log(sectionBoby.scrollTop)
 	let checkNum = todoContentList.clientHeight - sectionBoby.offsetHeight - sectionBoby.scrollTop;
 	
 	if(checkNum < 1 && checkNum > -1 && page < totalPage){
@@ -16,8 +17,6 @@ sectionBoby.onscroll = () => {
 		page++;
 		load();
 	}
-	
-	
 }
 
 let listType = "all";
@@ -62,7 +61,7 @@ function load() {
 		type: "get",
 		url: `/api/v1/todolist/list/${listType}`,
 		data: {
-			page: page,
+			"page": page,
 			contentCount: 20
 		},
 		dataType: "json",
