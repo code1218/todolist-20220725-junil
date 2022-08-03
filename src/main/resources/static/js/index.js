@@ -95,8 +95,64 @@ function getList(data) {
 		`
 		todoContentList.innerHTML += listContent;
 	}
+	
+	addEvent();
 }
 
+function addEvent() {
+	const todoContents = document.querySelectorAll(".todo-content");
+	
+	for(let i = 0; i < todoContents.length; i++){
+		let todoCode = todoContents[i].querySelector(".complete-check").getAttribute("id");
+		let index = todoCode.lastIndexOf("-");
+		todoCode = todoCode.substring(index + 1);
+		
+		todoContents[i].querySelector(".complete-check").onchange = () => {
+			updateComplete(todoContents[i], todoCode);
+		}
+		
+		todoContents[i].querySelector(".importance-check").onchange = () => {
+			
+		}
+		
+		todoContents[i].querySelector(".trash-button").onclick = () => {
+			
+		}
+	}
+}
+
+function updateStatus(type, todoCode) {
+	result = false;
+	
+	$.ajax({
+		type: "put",
+		url: `/api/v1/todolist/${type}/todo/${todoCode}`,
+		async: false,
+		dataType: "json",
+		success: (response) => {
+			result = response.data
+			
+		},
+		error: errorMessage
+	})
+	return result;
+}
+
+function updateComplete(todoContent, todoCode) {
+	let result = updateStatus("complete", todoCode);
+	
+	if((listType == "complete" || listType == "incomplete") && result){
+		todoContentList.removeChild(todoContent);
+	}
+}
+
+function updateImportance(todoContent) {
+	
+}
+
+function deleteTodo(todoContent) {
+	
+}
 
 function errorMessage(request, status, error) {
 	alert("요청 실패");
