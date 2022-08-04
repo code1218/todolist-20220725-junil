@@ -45,7 +45,7 @@ public class TodoServiceImpl implements TodoService {
 	public List<TodoListRespDto> getTodoList(String type, int page, int contentCount) throws Exception {
 				
 		List<Todo> todoList = todoRepository.getTodoList(createGetTodoListMap(type, page, contentCount));
-				
+		
 		return createTodoListRespDtos(todoList);
 	}
 	
