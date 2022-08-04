@@ -46,26 +46,7 @@ let totalPage = 0;
 let page = 1;
 let listType = "all";
 
-function load() {
-	$.ajax({
-		type: "get",
-		url: `/api/v1/todolist/list/${listType}`,
-		data: {
-			"page": page,
-			contentCount: 20
-		},
-		dataType: "json",
-		success: (response) => {
-			const todoList = response.data;
-			
-			setTotalPage(todoList[0].totalCount);
-			setIncompleteCount(todoList[0].incompleteCount);
-			createList(todoList);
-		},
-		error: errorMessage
-		
-	})
-}
+load();
 
 function setTotalPage(totalCount){
 	totalPage = totalCount % 20 == 0 ? totalCount / 20 : Math.floor(totalCount / 20) + 1;
@@ -77,6 +58,26 @@ function setIncompleteCount(incompleteCount) {
 
 function appendList(listContent) {
 	todoContentList.innerHTML += listContent
+}
+
+function updateCheckStatus(type, todoContent, todoCode) {
+	let result = updateStatus(type, todoCode);
+	
+	if(
+			(
+				(
+					type == "complete" 
+					&& 
+					(listType == "complete" || listType == "incomplete")
+				) 
+				|| 
+				(type == "importance" && listType == "importance")
+			) 
+			&& 
+			result
+		) {
+		todoContentList.removeChild(todoContent);
+	}
 }
 
 function addCompleteEvent(todoContent, todoCode) {
@@ -111,11 +112,22 @@ function addDeleteEvent(todoContent, todoCode) {
 }
 
 function addContentInputEvent(todoContent, todoCode) {
-	const todoContentText = todoContents[i].querySelector(".todo-content-text");
-	const todoContentInput = todoContents[i].querySelector(".todo-content-input");
-	let todoContentValue = null;
+	const todoContentText = todoContent.querySelector(".todo-content-text");
+	const todoContentInput = todoContent.querySelector(".todo-content-input");
+	let todoContentOldValue = null;
 	
 	let eventFlag = false;
+	
+	let updateTodo = () => {
+		const todoContentNewValue = todoContentInput.value;
+		if(getChangeStatusOfValue(todoContentOldValue, todoContentNewValue)){
+			if(updateTodoContent(todoCode, todoContentNewValue)){
+				todoContentText.textContent = todoContentNewValue;
+			}
+		}
+		todoContentText.classList.toggle("visible");
+		todoContentInput.classList.toggle("visible");
+	}
 	
 	todoContentText.onclick = () => {
 		todoContentValue = todoContentInput.value;
@@ -125,43 +137,25 @@ function addContentInputEvent(todoContent, todoCode) {
 		eventFlag = true;
 	}
 	
-	let updateTodoContent = () => {
-		if(todoContentValue != todoContentInput.value){
-			$.ajax({
-				type: "put",
-				url: `/api/v1/todolist/todo/${todoCode}`,
-				contentType: "application/json",
-				data: JSON.stringify({
-					"todoCode": todoCode, 
-					todo: todoContentInput.value
-					}),
-				async: false,
-				dataType: "json",
-				success: (response) => {
-					if(response.data){
-						todoContentText.textContent = todoContentInput.value;
-					}
-				},
-				error: errorMessage
-			})
-		}
-		todoContentText.classList.toggle("visible");
-		todoContentInput.classList.toggle("visible");
-	}
-	
 	todoContentInput.onblur = () => {
 		if(eventFlag){
-			updateTodoContent();
+			updateTodo();
 		}
 	}
 	
 	todoContentInput.onkeyup = () => {
 		if(window.event.keyCode == 13){
 			eventFlag = false;
-			updateTodoContent();
+			updateTodo();
 		}
 	}
 }
+
+function getChangeStatusOfValue(originValue, newValue) {
+	return originValue != newValue;
+}
+
+
 
 function substringTodoCode(todoContent) {
 	const completeCheck = todoContent.querySelector(".complete-check");
@@ -206,10 +200,6 @@ function createList(todoList) {
 }
 
 
-
-
-
-
 sectionBoby.onscroll = () => {
 	console.log(sectionBoby.scrollTop)
 	let checkNum = todoContentList.clientHeight - sectionBoby.offsetHeight - sectionBoby.scrollTop;
@@ -223,32 +213,45 @@ sectionBoby.onscroll = () => {
 }
 
 
-
-load();
-
 selectedTypeButton.onclick = () => {
     typeSelectBoxList.classList.toggle("visible");
 }
 
 
+function resetPage() {
+	page = 1;
+}
+
+function removeAllclassList(elements, className) {
+	for(let element of elements){
+		element.classList.remove(className);
+	}
+}
+
+function setListType(selectedType) {
+	listType = selectedType.toLowerCase();
+}
+
+function clearTodoContentList() {
+	todoContentList.innerHTML = "";
+}
+
 for(let i = 0; i < typeSelectBoxListLis.length; i++){
 	
 	typeSelectBoxListLis[i].onclick = () => {
-		page = 1;
+		resetPage()
 		
-		for(let i = 0; i < typeSelectBoxListLis.length; i++){
-			typeSelectBoxListLis[i].classList.remove("type-selected");
-		}
-		
-		const selectedType = document.querySelector(".selected-type");
+		removeAllclassList(typeSelectBoxListLis, "type-selected");
 		
 		typeSelectBoxListLis[i].classList.add("type-selected");
 		
-		listType = typeSelectBoxListLis[i].textContent.toLowerCase();
+		setListType(typeSelectBoxListLis[i].textContent);
+		
+		const selectedType = document.querySelector(".selected-type");
 		
 		selectedType.textContent = typeSelectBoxListLis[i].textContent;
 		
-		todoContentList.innerHTML = "";
+		clearTodoContentList();
 		
 		load();
 		
@@ -258,14 +261,48 @@ for(let i = 0; i < typeSelectBoxListLis.length; i++){
 	
 }
 
+///////////////////////////////////////////<<< REQUEST >>>//////////////////////////////////////////////////
 
+function load() {
+	$.ajax({
+		type: "get",
+		url: `/api/v1/todolist/list/${listType}`,
+		data: {
+			"page": page,
+			contentCount: 20
+		},
+		dataType: "json",
+		success: (response) => {
+			const todoList = response.data;
+			
+			setTotalPage(todoList[0].totalCount);
+			setIncompleteCount(todoList[0].incompleteCount);
+			createList(todoList);
+		},
+		error: errorMessage
+		
+	})
+}
 
-
-
-
-
-
-
+function updateTodoContent(todoCode, todo) {
+	let successFlag = false;
+	$.ajax({
+		type: "put",
+		url: `/api/v1/todolist/todo/${todoCode}`,
+		contentType: "application/json",
+		data: JSON.stringify({
+			"todoCode": todoCode, 
+			"todo": todo
+			}),
+		async: false,
+		dataType: "json",
+		success: (response) => {
+			successFlag = response.data;
+		},
+		error: errorMessage
+	})
+	return successFlag;
+}
 
 function updateStatus(type, todoCode) {
 	result = false;
@@ -284,25 +321,7 @@ function updateStatus(type, todoCode) {
 	return result;
 }
 
-function updateCheckStatus(type, todoContent, todoCode) {
-	let result = updateStatus(type, todoCode);
-	
-	if(
-			(
-				(
-					type == "complete" 
-					&& 
-					(listType == "complete" || listType == "incomplete")
-				) 
-				|| 
-				(type == "importance" && listType == "importance")
-			) 
-			&& 
-			result
-		) {
-		todoContentList.removeChild(todoContent);
-	}
-}
+
 
 function deleteTodo(todoContent, todoCode) {
 	$.ajax({
