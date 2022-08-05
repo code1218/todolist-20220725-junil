@@ -309,6 +309,10 @@ main {
     color:#5b5b5b;
 }
 
+.modal-visible {
+    display: none !important;
+}
+
 .modal-container {
     position: fixed;
     top: 0px;
@@ -342,12 +346,19 @@ main {
     height: 40px;
 }
 
+
+
 .modal-close-button {
     border: 1px solid #dbdbdb;
     border-radius: 5px;
     background-color: #ffffff;
     width: 30px;
     height: 30px;
+    cursor: pointer;
+}
+
+.modal-close-button:active {
+    background-color: #dbdbdb40;
 }
 
 .modal-items {
@@ -358,25 +369,37 @@ main {
     padding-top: 15px;
     width: 100%;
     height: 100%;
+    position: relative;
+}
+
+.modal-items .importance-check + label {
+    left: 20px;
 }
 
 .modal-todo-input {
     border: 0px;
     border-bottom: 2px solid #dbdbdb;
     outline: none;
+    padding: 0px 30px;
     width: 340px;
     height:40px;
     text-align: center;
     font-size: 16px;
+    cursor: pointer;
 }
 
 .modal-commit-button {
     border: 0px;
     border-top: 1px solid #dbdbdb;
     background-color: white;
-    height: 70px;
+    height: 80px;
     font-size: 14px;
     font-weight: 500;
+    cursor: pointer;
+}
+
+.modal-commit-button:active {
+    background-color: #dbdbdb40;
 }
 
 
