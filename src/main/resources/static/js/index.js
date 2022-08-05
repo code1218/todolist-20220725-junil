@@ -321,8 +321,6 @@ function updateStatus(type, todoCode) {
 	return result;
 }
 
-
-
 function deleteTodo(todoContent, todoCode) {
 	$.ajax({
 		type: "delete",
